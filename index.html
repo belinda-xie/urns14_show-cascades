@@ -858,20 +858,37 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
       "But how they came to make that guess is different...<br>" +
       "Let's take a look at what ball each friend received.<br><br>"
   };
-  timeline.push(showFriendBalls);
+  // timeline.push(showFriendBalls);
 
 var whichBall = Array(10).fill('questionball.png');
 
-var i = 0;
+var explainI = ["Here you can see that each friend made a guess according to the ball they received.<br><br>" +
+  "Since the friends are independent of each other, the only evidence they have comes from their own ball.<br><br>"];
+
+var explainSq = ["Here you can see that the last two friends have copied the guesses given by earlier friends.<br><br>" +
+  names[3] + " and " + names[4] + " guessed 'grey' even though they each received a white ball.<br><br>" +
+  "Why did this happen?<br><br>" +
+  "Let's think about " + names[4] + "'s situation.<br>" +
+  "She has heard 4 guesses for the grey jar but now receives 1 white ball.<br>" +
+  "Given this evidence, it is possible that the selected jar was the grey jar and not the white jar.<br>" +
+  names[4] + " is being influenced by evidence she's heard from other people - and she guesses 'grey'.<br><br>"]
+
+
 for (var i = 0; i < informants*2; i++) {
 
   if (dependency[0] == 'Independent') {
+    var indexI = 0;
+    var indexSq = 5;
+
     if (i < 8) {
       whichBall[i] = ['greyball.PNG'];
     } else {
       whichBall[i] = ['whiteball.png'];
     }
   } else {
+    var indexI = 5;
+    var indexSq = 0;
+
     if (i < 3 | i > 4) {
       whichBall[i] = ['greyball.PNG'];
     } else {
@@ -881,11 +898,11 @@ for (var i = 0; i < informants*2; i++) {
 
   var showBallsInd = ["Here is an example of <b>independent</b> information.<br><br>" +
     '<table class="allborders" width=800 height=100% border=1><tr>' +
-    "<td align=center valign=center><strong>" + names[0] + "</strong><br /><img src='img/" + whichBall[0] + "'></img><img src = " + friends[0] + "></img></td>" +
-    "<td align=center valign=center><strong>" + names[1] + "</strong><br /><img src='img/" + whichBall[1] + "'></img><img src = " + friends[1] + "></img></td>" +
-    "<td align=center valign=center><strong>" + names[2] + "</strong><br /><img src='img/" + whichBall[2] + "'></img><img src = " + friends[2] + "></img></td>" +
-    "<td align=center valign=center><strong>" + names[3] + "</strong><br /><img src='img/" + whichBall[3] + "'></img><img src = " + friends[3] + "></img></td>" +
-    "<td align=center valign=center><strong>" + names[4] + "</strong><br /><img src='img/" + whichBall[4] + "'></img><img src = " + friends[4] + "></img></td></tr>" +
+    "<td align=center valign=center><strong>" + names[0] + "</strong><br /><img src='img/" + whichBall[0 + indexI] + "'></img><img src = " + friends[0] + "></img></td>" +
+    "<td align=center valign=center><strong>" + names[1] + "</strong><br /><img src='img/" + whichBall[1 + indexI] + "'></img><img src = " + friends[1] + "></img></td>" +
+    "<td align=center valign=center><strong>" + names[2] + "</strong><br /><img src='img/" + whichBall[2 + indexI] + "'></img><img src = " + friends[2] + "></img></td>" +
+    "<td align=center valign=center><strong>" + names[3] + "</strong><br /><img src='img/" + whichBall[3 + indexI] + "'></img><img src = " + friends[3] + "></img></td>" +
+    "<td align=center valign=center><strong>" + names[4] + "</strong><br /><img src='img/" + whichBall[4 + indexI] + "'></img><img src = " + friends[4] + "></img></td></tr>" +
     iLooked + "and " + iGuess + //1st
     iLooked + "and " + iGuess + //2nd
     iLooked + "and " + iGuess + //3rd
@@ -894,11 +911,11 @@ for (var i = 0; i < informants*2; i++) {
 
   var showBallsSeq = ["Here is an example of <b>sequential</b> information.<br><br>" +
     '<table class="outsideborder" width=800 height=100% border=1><tr>' +
-    "<td align=center valign=center><strong>" + names[0] + "</strong><br /><img src='img/" + whichBall[5] + "'></img><img src = " + friends[0] + "></img></td>" +
-    "<td align=center valign=center><strong>" + names[1] + "</strong><br /><img src='img/" + whichBall[6] + "'></img><img src = " + friends[1] + "></img></td>" +
-    "<td align=center valign=center><strong>" + names[2] + "</strong><br /><img src='img/" + whichBall[7] + "'></img><img src = " + friends[2] + "></img></td>" +
-    "<td align=center valign=center><strong>" + names[3] + "</strong><br /><img src='img/" + whichBall[8] + "'></img><img src = " + friends[3] + "></img></td>" +
-    "<td align=center valign=center><strong>" + names[4] + "</strong><br /><img src='img/" + whichBall[9] + "'></img><img src = " + friends[4] + "></img></td></tr>" +
+    "<td align=center valign=center><strong>" + names[0] + "</strong><br /><img src='img/" + whichBall[0 + indexSq] + "'></img><img src = " + friends[0] + "></img></td>" +
+    "<td align=center valign=center><strong>" + names[1] + "</strong><br /><img src='img/" + whichBall[1 + indexSq] + "'></img><img src = " + friends[1] + "></img></td>" +
+    "<td align=center valign=center><strong>" + names[2] + "</strong><br /><img src='img/" + whichBall[2 + indexSq] + "'></img><img src = " + friends[2] + "></img></td>" +
+    "<td align=center valign=center><strong>" + names[3] + "</strong><br /><img src='img/" + whichBall[3 + indexSq] + "'></img><img src = " + friends[3] + "></img></td>" +
+    "<td align=center valign=center><strong>" + names[4] + "</strong><br /><img src='img/" + whichBall[4 + indexSq] + "'></img><img src = " + friends[4] + "></img></td></tr>" +
     iLooked + "and " + iGuess + // 1st
     iLooked + "<i>and</i> I thought about what " + names[0] + " said.<br>" + iGuess +  //2nd
     iLooked + "<i>and</i> I thought about what " + names[0] + " and " + names[1] + " said.<br>" + iGuess +  //3rd
@@ -906,39 +923,45 @@ for (var i = 0; i < informants*2; i++) {
     iLooked + "<i>and</i> I thought about what " + names[0] + ", " + names[1] + ", " + names[2] + ", and " + names[3] + " said.<br>" + iGuess + "</tr></table><br><br>" //5th
   ];
 
+
   if (dependency[0] == 'Independent') {
-    var combinedStim = showBallsInd + "<br>" + showBallsSeq;
+    if (i < 4) {
+      var combinedStim = showBallsInd + "<br>" + showBallsSeq;
+    } else {
+      if (i > 3 & i < 9) {
+        var combinedStim = showBallsInd + explainI + "Now let's see which balls were sampled in the <strong>sequential</strong> case.<br><br>" + showBallsSeq;
+      } else {
+        var combinedStim = showBallsInd + explainI + "Now let's see which balls were sampled in the <strong>sequential</strong> case.<br><br>" + showBallsSeq + explainSq;
+      }
+    }
   } else {
-    var combinedStim = showBallsSeq + "<br>" + showBallsInd;
+    if (i < 4) {
+      var combinedStim = showBallsSeq + "<br>" + showBallsInd;
+    } else {
+      if (i > 3 & i < 9) {
+        var combinedStim = showBallsSeq + explainSq + "Now let's see which balls were sampled in the <strong>independent</strong> case.<br><br>" + showBallsInd;
+      } else {
+        var combinedStim = showBallsSeq + explainSq + "Now let's see which balls were sampled in the <strong>independent</strong> case.<br><br>" + showBallsInd + explainI;
+      }
+    }
   };
+
+  if (i == 9) {
+    var showBallsButton = ['Click to continue'];
+  } else {
+    var showBallsButton = ['Click to see ' + names[i+1] + "'s ball"];
+  }
 
     var showBalls1 = {  // after showing example testimonies
       type: 'html-button-response',
       button_html: '<button class="jspsych-btn" style="display:none">%choice%</button>',
-      choices: ['Click to see ' + names[i+1] + "'s ball"],
+      choices: showBallsButton,
       on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 60)},
       is_html: true,
       stimulus: combinedStim
     };
     timeline.push(showBalls1);
 };
-
-
-
-var postExSq = ['<table class="outsideborder" width=800 height=100% border=1><tr>' +
-  "<td align=center valign=center><strong>" + names[0] + "</strong><br /><img src='img/" + whichBall[0] + "'></img><img src = " + friends[0] + "></img></td>" +
-  "<td align=center valign=center><strong>" + names[1] + "</strong><br /><img src='img/" + whichBall[1] + "'></img><img src = " + friends[1] + "></img></td>" +
-  "<td align=center valign=center><strong>" + names[2] + "</strong><br /><img src='img/" + whichBall[2] + "'></img><img src = " + friends[2] + "></img></td>" +
-  "<td align=center valign=center><strong>" + names[3] + "</strong><br /><img src='img/" + whichBall[3] + "'></img><img src = " + friends[3] + "></img></td>" +
-  "<td align=center valign=center><strong>" + names[4] + "</strong><br /><img src='img/" + whichBall[4] + "'></img><img src = " + friends[4] + "></img></td></tr>" +
-  iLooked + "and " + iGuess + // 1st
-  iLooked + "<i>and</i> I thought about what " + names[0] + " said.<br>" + iGuess +  //2nd
-  iLooked + "<i>and</i> I thought about what " + names[0] + " and " + names[1] + " said.<br>" + iGuess +  //3rd
-  iLooked + "<i>and</i> I thought about what " + names[0] + ", " + names[1] + ", and " + names[2] + " said.<br>" + iGuess +  //4th
-  iLooked + "<i>and</i> I thought about what " + names[0] + ", " + names[1] + ", " + names[2] + ", and " + names[3] + " said.<br>" + iGuess + "</tr></table><br><br>" //5th
-];
-
-
 
 
   // ------------- own ball ----------- //
