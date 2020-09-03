@@ -8,12 +8,15 @@
 	<script src="./jspsych-6/plugins/jspsych-html-button-response.js"></script>
   <script src="./jspsych-6/plugins/jspsych-survey-likert.js"></script>
   <script src="./jspsych-6/plugins/jspsych-survey-text.js"></script>
-  <!-- <script src="./jspsych-6/plugins/jspsych-survey-text-required.js"></script> -->
+  <script src="./jspsych-6/plugins/jspsych-survey-text-required.js"></script>
   <script src="./jspsych-6/plugins/jspsych-image-button-response.js"></script>
   <script src="./jspsych-6/plugins/jspsych-html-slider-response-garston.js"></script>
   <script src="./jspsych-6/plugins/jspsych-html-slider-response.js"></script>
 	<script src="./js/welcome.js"></script>
   <link href="./jspsych-6/css/jspsych.css" rel="stylesheet" type="text/css"></link>
+  <link href="./jspsych-6/css/saoirse_slider_demo.css" rel="./css/style.css" type="text/css"></link>
+  <!-- <link rel="./css/style.css" href="saoirse_slider_demo.css"></link> -->
+
   </head>
 
   <body>
@@ -158,6 +161,7 @@ function setDisplay(theClass, theValue) {
 };
 
 // -------------------------- INSTRUCTIONS ---------------------------- //
+
 var instructionsPreempt = {
   type: 'html-button-response',
   choices: ['Click here to begin'],
@@ -277,7 +281,7 @@ instructionsline.push(loop_node3);
 var instructionsTimeline = {
   timeline: instructionsline,
 };
-// timeline.push(instructionsTimeline);
+timeline.push(instructionsTimeline);
 
 // ------------------------ PRACTICE DRAWS ----------------------------- //
 var nPracDraws = 12;
@@ -347,8 +351,8 @@ for (y = 0; y < nPracTrials; y++) {  // loops through y practice trials
     stimulus: "<font color=white>PQ" + [y+1] + "</font><br>" +  // log which trial participant is responding to
       "<p style=text-align:center>Based on the balls you saw,<br>" +
       "how likely is it that the selected jar was the " + colourOrder[1] + " jar or the " + colourOrder[0] + " jar?",
-    min: minExtra,  // these will differ depending on whether participant was
-    max: maxExtra,  // randomly assigned to see the slider above vs. below the scale
+    min: 0,  // these will differ depending on whether participant was
+    max: 10,  // randomly assigned to see the slider above vs. below the scale
     step: 1,
     start: startExtra,
     labels: labelsExtra,
@@ -379,7 +383,7 @@ for (y = 0; y < nPracTrials; y++) {  // loops through y practice trials
 var practiceTimeline = {
   timeline: practiceline,
 };
-// timeline.push(practiceTimeline);
+timeline.push(practiceTimeline);
 
 // -------------------- introduce friends ------------------------ //
 var friendsHelp = {
@@ -423,7 +427,7 @@ var loop_node2 = {
   timeline: introloop2,
   loop_function: function(data) {return !instruct2Correct} // stop looping if correct
 };
-// timeline.push(loop_node2);
+timeline.push(loop_node2);
 
 // -------------------------- CHOICE TASK ----------------------------- //
 // describe independent vs. sequential testimony
@@ -458,7 +462,7 @@ var twoTypes = {
   button_html: '<button class="jspsych-btn" style="display:none">%choice%</button>',
   on_start: function() {setTimeout(function() {setDisplay("jspsych-btn","")}, 120)}
 };
-// timeline.push(twoTypes);
+timeline.push(twoTypes);
 
 var gwJars = {
   type: 'html-button-response',
@@ -475,10 +479,11 @@ var gwJars = {
   button_html: '<button class="jspsych-btn" style="display:none">%choice%</button>',
   on_start: function() {setTimeout(function() {setDisplay("jspsych-btn","")}, 80)}
 };
-// timeline.push(gwJars);
+timeline.push(gwJars);
 
 // ------------ start building long screen leading up to choice task --------------- //
 var p;             // build code to show images of friends with testimony
+// the following table class = "allborders" or "outsideborder" have been defined in the jspsych.css file
 var picsI = ['<table class="allborders" width=800 height=100% border=1><tr>']; // works for independent
 var picsSq = ['<table class="outsideborder" width=800 height=100% border=1><tr>'];
 for (p = 0; p < informants; p++) {
@@ -944,6 +949,26 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
     if (example == true) {timeline.push(showBalls1);};
 };
 
+  // ------------- choice question ------------------- //
+  var twoChoose = {
+    type: "survey-multi-choice",
+    preamble: [combinedStim],
+    questions: [{prompt: "In your opinion, which set of social information provides stronger evidence for the grey jar being the selected jar?",
+                options: ["" + dependency[0] + " information", "Both provide equal evidence", "" + dependency[1] + " information"],
+                required: true}],
+  };
+  if (example == true) {timeline.push(twoChoose);};
+
+  var twoWhy = {
+    type: "survey-text-required",
+    preamble: [combinedStim],
+    questions: [{prompt: "Why did you choose that answer?", rows: 3, columns: 40,
+                  required: true,
+                  placeholder: "",
+                  name: "why"}]
+  };
+  if (example == true) {timeline.push(twoWhy);};
+
   // ------------- own ball ----------- //
   var show = {
     type: 'html-button-response',
@@ -989,7 +1014,7 @@ var x = showGuesses("grey", "", egA, egB, true, null, false);
 // --------------------- INTRODUCE TASK ------------------------- //
 var introTask = {
   type: "html-button-response",
-  stimulus: [//"Thank you for your opinion.<br><br>" +
+  stimulus: ["Thank you for your opinion.<br><br>" +
     "Now that the examples are out of the way, you will complete the actual task.<br><br>" +
     "You will have the opportunity to use each of the 2 kinds of social information.<br>" +
     "As you receive information, I will ask you to <strong>guess which jar was selected</strong>.<br>" +

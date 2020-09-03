@@ -128,3 +128,33 @@
   table-layout: fixed;
   width: 100%;
 } */
+
+/* ADD TABLE SPECS - these were customised by me (BX) 11/12/19*/
+/* table {
+  table-layout: fixed;
+  width: 100%;
+} */
+
+/* this shows outside and inside vertical borders
+is therefore suitable for the independent testimony in urns experiments */
+table.allborders {
+  border-collapse: collapse;
+  border: 1px solid black;
+}
+
+table.allborders tr {border-top:1px solid black;} /*makes top border of first row black*/
+table.allborders tr + tr {border-top:0.5px solid white;} /*makes top border of subsequent rows white*/
+
+/* this shows outside borders only
+is therefore suitable for the sequential testimony in urns experiments */
+table.outsideborder {
+  border-collapse: collapse;
+  border: 1px solid black;
+}
+
+table.outsideborder tr {border-top:1px solid black;}    /*makes inside borders white*/
+table.outsideborder tr + tr {border-top:1px solid white;}
+table.outsideborder td {border-left:1px solid black;}
+table.outsideborder td + td {border-left:1px solid white;}
+table.outsideborder tr:last-child td {border-left:1px solid black;}
+table.outsideborder tr:last-child td + td {border-left:1px solid white;}
