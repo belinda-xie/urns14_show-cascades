@@ -11,6 +11,7 @@
   <!-- <script src="./jspsych-6/plugins/jspsych-survey-text-required.js"></script> -->
   <script src="./jspsych-6/plugins/jspsych-image-button-response.js"></script>
   <script src="./jspsych-6/plugins/jspsych-html-slider-response-garston.js"></script>
+  <script src="./jspsych-6/plugins/jspsych-html-slider-response.js"></script>
 	<script src="./js/welcome.js"></script>
   <link href="./jspsych-6/css/jspsych.css" rel="stylesheet" type="text/css"></link>
   </head>
@@ -30,7 +31,8 @@
 var timeline = [];
 
 // if participants get an instruction check question wrong, they will loop back to the previous instruction page
-var trainline = [];   // training intervention timeline
+var instructionsline = [];
+var practiceline = [];
 var introloop = [];   // instructions about ball proportions
 var introloop1 = [];  // instructions about participant's task
 var introloop2 = [];  // instructions about what info (balls) friends receive
@@ -165,7 +167,7 @@ var instructionsPreempt = {
   stimulus: "The experiment will begin now.<br><br>The first few pages will show the instructions.<br>Make sure to read them carefully, as you will be asked questions to check that you understand them." +
   "<br><br>If you answer a question incorrectly, you will be taken back to the instructions page.<br><br>"
 };
-// timeline.push(instructionsPreempt);
+instructionsline.push(instructionsPreempt);
 
 // -------------------- BALLS-AND-URNS TASK -------------------- //
 var instructions1 = {
@@ -225,7 +227,7 @@ var loop_node = {
   timeline: introloop,
   loop_function: function(data) {return !instruct1Correct} // stop looping if correct
 };
-// timeline.push(loop_node);
+instructionsline.push(loop_node);
 
 // ------------------ describe objective of experiment -------------------- //
 var task = {
@@ -270,7 +272,12 @@ var loop_node3 = {
   timeline: introloop1,
   loop_function: function(data) {return !instruct3Correct} // stop looping if correct
 };
-// timeline.push(loop_node3);
+instructionsline.push(loop_node3);
+
+var instructionsTimeline = {
+  timeline: instructionsline,
+};
+// timeline.push(instructionsTimeline);
 
 // ------------------------ PRACTICE DRAWS ----------------------------- //
 var nPracDraws = 12;
@@ -284,7 +291,7 @@ var introPrac = {                     // instructions for the practice draws
   stimulus: "To familiarise yourself with the jars, you will run through " + nPracTrials + " practice trials.<br><br>" +
       "In these trials, you will draw " + nPracDraws + " balls from a jar (either the " + colourOrder[0] + " jar or the " + colourOrder[1] + " jar).<br>Once you have seen the colour of " + nPracDraws + " balls, you will make your best guess about which jar was selected.<br><br>"
 };
-// timeline.push(introPrac);
+practiceline.push(introPrac);
 
 var pracJars = [colourOrder[0], colourOrder[1], colourOrder[0]]; // ensures 1 jar of each colour is selected
 
@@ -302,7 +309,7 @@ for (y = 0; y < nPracTrials; y++) {  // loops through y practice trials
       choices: ['Click here to draw a ball from the jar'],
       response_ends_trial: true
     };
-    // timeline.push(toDraw);
+    practiceline.push(toDraw);
 
     var ballDrawn = {        // show the sampled ball
       type: 'html-button-response',
@@ -310,7 +317,7 @@ for (y = 0; y < nPracTrials; y++) {  // loops through y practice trials
       stimulus: ["<img src = img/" + drawBalls[z] + "ball.PNG></img><br>" +
         "You sampled a <font color=" + drawBalls[z] + ">" + drawBalls[z] + "</font> ball.<br>"]
     };
-    // timeline.push(ballDrawn);
+    practiceline.push(ballDrawn);
   };
 
   var allBallsDrawn = {              // once all z balls have been sampled
@@ -333,10 +340,10 @@ for (y = 0; y < nPracTrials; y++) {  // loops through y practice trials
     "<td align=center valign=center><img src = img/" + drawBalls[10] + "ballsmall.png></img></td>" +
     "<td align=center valign=center><img src = img/" + drawBalls[11] + "ballsmall.png></img></td></tr>"]
   };
-  // timeline.push(allBallsDrawn);
+  practiceline.push(allBallsDrawn);
 
   var rate = {              // elicit likelihood rating
-    type: 'html-slider-response-garston',
+    type: 'html-slider-response',
     stimulus: "<font color=white>PQ" + [y+1] + "</font><br>" +  // log which trial participant is responding to
       "<p style=text-align:center>Based on the balls you saw,<br>" +
       "how likely is it that the selected jar was the " + colourOrder[1] + " jar or the " + colourOrder[0] + " jar?",
@@ -350,7 +357,7 @@ for (y = 0; y < nPracTrials; y++) {  // loops through y practice trials
     no_less: 0,
     no_more: 10
   };
-  // timeline.push(rate);
+  practiceline.push(rate);
 
   if (y < 1) {    // text for the button depends on which practice trial participant is up to
     var pracBut = ['Click here to begin the next trial']
@@ -366,8 +373,13 @@ for (y = 0; y < nPracTrials; y++) {  // loops through y practice trials
     button_html: '<button class="jspsych-btn" style="display:none">%choice%</button>',
     on_start: function() {setTimeout(function() {setDisplay("jspsych-btn","")}, 30)}
   };
-  // timeline.push(actualJar);
+  practiceline.push(actualJar);
 };
+
+var practiceTimeline = {
+  timeline: practiceline,
+};
+// timeline.push(practiceTimeline);
 
 // -------------------- introduce friends ------------------------ //
 var friendsHelp = {
@@ -459,7 +471,7 @@ var gwJars = {
     "In the white jar, 100 balls are white, and 20 are grey.<br><br>" +
     "Like you, my friends understand that the colour of the ball does not perfectly predict the colour of the jar<br>" +
     "(that is, there is a small chance of drawing a white ball from the grey jar, or a grey ball from the white jar).<br><br>"],
-  choices: ['Click here to see the examples'],
+  choices: ['Click here to continue'],
   button_html: '<button class="jspsych-btn" style="display:none">%choice%</button>',
   on_start: function() {setTimeout(function() {setDisplay("jspsych-btn","")}, 80)}
 };
@@ -613,7 +625,7 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
     stimulus: egA + showPicsA + "<br><br>"
     // stimulus: egA + picsI + "</tr></table>" + "<br><br>"
   };
-  // timeline.push(exA);
+  timeline.push(exA);
 
   var ex1 = {   // 1st informant
     type: 'html-button-response',
@@ -623,7 +635,7 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
     is_html: true,
     stimulus: egA + egFriend1
   };
-  // timeline.push(ex1);
+  timeline.push(ex1);
 
   var rating1 = {              // elicit likelihood rating
     type: 'html-slider-response-garston',
@@ -640,7 +652,7 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
     no_less: 0,
     no_more: 10
   };
-  // if (example == false) {timeline.push(rating1);};
+  if (example == false) {timeline.push(rating1);};
 
   var ex2 = {   // 2nd informant
     type: 'html-button-response',
@@ -650,7 +662,7 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
     is_html: true,
     stimulus: egA + egFriend2
   };
-  // timeline.push(ex2);
+  timeline.push(ex2);
 
   var rating2 = {              // elicit likelihood rating
     type: 'html-slider-response-garston',
@@ -667,23 +679,17 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
     no_less: 0,
     no_more: 10
   };
-  // if (example == false) {timeline.push(rating2);};
-
-  if (informants == '3') {              // 3rd informant
-    var ex3Button = ['Click here to continue']; // if 3rd = last informant
-  } else {
-    var ex3Button = ['Click the button to hear ' + names[3] + '\'s guess.']; // if 3rd x=x last informant
-  };
+  if (example == false) {timeline.push(rating2);};
 
   var ex3 = {
     type: 'html-button-response',
     button_html: '<button class="jspsych-btn" style="display:none">%choice%</button>',
-    choices: ex3Button,
+    choices: ['Click the button to hear ' + names[3] + '\'s guess.'],
     on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 60)},
     is_html: true,
     stimulus: egA + egFriend3
   };
-  // timeline.push(ex3);
+  timeline.push(ex3);
 
   var rating3 = {              // elicit likelihood rating
     type: 'html-slider-response-garston',
@@ -700,7 +706,7 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
     no_less: 0,
     no_more: 10
   };
-  // if (example == false) {timeline.push(rating3);};
+  if (example == false) {timeline.push(rating3);};
 
   // 4th informant
   var ex4 = {
@@ -711,6 +717,7 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
     is_html: true,
     stimulus: egA + egFriend4
   };
+  timeline.push(ex4);
 
   var rating4 = {              // elicit likelihood rating
     type: 'html-slider-response-garston',
@@ -727,26 +734,18 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
     no_less: 0,
     no_more: 10
   };
-  if (informants > 3) {
-    // timeline.push(ex4);
-      // if (example == false) { timeline.push(rating4);}
-  };
+  if (example == false) { timeline.push(rating4);}
 
   // 5th informant
-  if (informants == '5') {
-    var ex5Button = ['Click here to continue']; // if 5th = last informant
-  } else {
-    var ex5Button = ['Click the button to hear ' + names[5] + '\'s guess.']; // if 5th x=x last informant
-  };
-
   var ex5 = {
     type: 'html-button-response',
     button_html: '<button class="jspsych-btn" style="display:none">%choice%</button>',
-    choices: ex5Button,
+    choices: ['Click here to continue'],
     on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 60)},
     is_html: true,
     stimulus: egA + egFriend5
   };
+  if (example == false) { timeline.push(ex5);}
 
   var rating5 = {              // elicit likelihood rating
     type: 'html-slider-response-garston',
@@ -763,19 +762,9 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
     no_less: 0,
     no_more: 10
   };
+  if (example == false) { timeline.push(rating5);}
 
-  if (informants > 3) {
-    // timeline.push(ex5);
-      // if (example == false) { timeline.push(rating5);}
-  };
-
-  switch (informants) {  // what is the last stimulus from the 1st trial?
-    case 3:
-      var lastFriend = egFriend3;
-      break;
-    default:
-      var lastFriend = egFriend5;
-  };
+  var lastFriend = egFriend5;
 
   var exB = {                                        // start 2nd trial
     type: 'html-button-response',
@@ -785,7 +774,7 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
     is_html: true,
     stimulus: egA + lastFriend + egB + showPicsB + "<br><br>"
   };
-  // if (example == true) {timeline.push(exB);};
+  if (example == true) {timeline.push(exB);};
 
   var exB1 = {   // 1st informant
     type: 'html-button-response',
@@ -795,7 +784,7 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
     is_html: true,
     stimulus: egA + lastFriend + egB + egFriendB1
   };
-  // if (example == true) {timeline.push(exB1);};
+  if (example == true) {timeline.push(exB1);};
 
   var exB2 = {   // 2nd informant
     type: 'html-button-response',
@@ -805,17 +794,17 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
     is_html: true,
     stimulus: egA + lastFriend + egB + egFriendB2
   };
-  // if (example == true) {timeline.push(exB2);};
+  if (example == true) {timeline.push(exB2);};
 
   var exB3 = {
     type: 'html-button-response',
     button_html: '<button class="jspsych-btn" style="display:none">%choice%</button>',
-    choices: ex3Button,
+    choices: ['Click the button to hear ' + names[3] + '\'s guess.'],
     on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 60)},
     is_html: true,
     stimulus: egA + lastFriend + egB + egFriendB3
   };
-  // if (example == true) {timeline.push(exB3);};
+  if (example == true) {timeline.push(exB3);};
 
   // 4th informant
   var exB4 = {
@@ -826,25 +815,19 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
     is_html: true,
     stimulus: egA + lastFriend + egB + egFriendB4
   };
-  // if (informants > 3 & example == true) {timeline.push(exB4);};
+  if (example == true) {timeline.push(exB4);};
 
   var exB5 = {
     type: 'html-button-response',
     button_html: '<button class="jspsych-btn" style="display:none">%choice%</button>',
-    choices: ex5Button,
+    choices: ['Click here to continue'],
     on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 60)},
     is_html: true,
     stimulus: egA + lastFriend + egB + egFriendB5
   };
-  // if (informants > 3 & example == true) {timeline.push(exB5);};
+  if (example == true) {timeline.push(exB5);};
 
-  switch (informants) {
-    case 3:
-      var lastFriendB = egFriendB3;
-      break;
-    default:
-      var lastFriendB = egFriendB5;
-  };
+  var lastFriendB = egFriendB5;
 
   // ------------- show example own-balls ------------------- //
   var showFriendBalls = {  // after showing example testimonies
@@ -858,43 +841,42 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
       "But how they came to make that guess is different...<br>" +
       "Let's take a look at what ball each friend received.<br><br>"
   };
-  // timeline.push(showFriendBalls);
+  if (example == true) {timeline.push(showFriendBalls);};
 
-var whichBall = Array(10).fill('questionball.png');
+  var whichBall = Array(10).fill('questionball.png');
 
-var explainI = ["Here you can see that each friend made a guess according to the ball they received.<br><br>" +
-  "Since the friends are independent of each other, the only evidence they have comes from their own ball.<br><br>"];
+  var explainI = ["Here you can see that each friend made a guess according to the ball they received.<br><br>" +
+    "Since the friends are independent of each other, the only evidence they have comes from their own ball.<br><br>"];
 
-var explainSq = ["Here you can see that the last two friends have copied the guesses given by earlier friends.<br><br>" +
-  names[3] + " and " + names[4] + " guessed 'grey' even though they each received a white ball.<br><br>" +
-  "Why did this happen?<br><br>" +
-  "Let's think about " + names[4] + "'s situation.<br>" +
-  "She has heard 4 guesses for the grey jar but now receives 1 white ball.<br>" +
-  "Given this evidence, it is possible that the selected jar was the grey jar and not the white jar.<br>" +
-  names[4] + " is being influenced by evidence she's heard from other people - and she guesses 'grey'.<br><br>"]
+  var explainSq = ["Here you can see that the last two friends have copied the guesses given by earlier friends.<br><br>" +
+    names[3] + " and " + names[4] + " guessed 'grey' even though they each received a white ball.<br><br>" +
+    "Why did this happen?<br><br>" +
+    "Let's think about " + names[4] + "'s situation.<br>" +
+    "She has heard 4 guesses for the grey jar but now receives 1 white ball.<br>" +
+    "Given this evidence, it is possible that the selected jar was the grey jar and not the white jar.<br>" +
+    names[4] + " is being influenced by evidence she's heard from other people - and she guesses 'grey'.<br><br>"]
 
+  for (var i = 0; i < informants*2; i++) {
 
-for (var i = 0; i < informants*2; i++) {
+    if (dependency[0] == 'Independent') {
+      var indexI = 0;
+      var indexSq = 5;
 
-  if (dependency[0] == 'Independent') {
-    var indexI = 0;
-    var indexSq = 5;
-
-    if (i < 8) {
-      whichBall[i] = ['greyball.PNG'];
+      if (i < 8) {
+        whichBall[i] = ['greyball.PNG'];
+      } else {
+        whichBall[i] = ['whiteball.png'];
+      }
     } else {
-      whichBall[i] = ['whiteball.png'];
-    }
-  } else {
-    var indexI = 5;
-    var indexSq = 0;
+      var indexI = 5;
+      var indexSq = 0;
 
-    if (i < 3 | i > 4) {
-      whichBall[i] = ['greyball.PNG'];
-    } else {
-      whichBall[i] = ['whiteball.png'];
-    }
-  };
+      if (i < 3 | i > 4) {
+        whichBall[i] = ['greyball.PNG'];
+      } else {
+        whichBall[i] = ['whiteball.png'];
+      }
+    };
 
   var showBallsInd = ["Here is an example of <b>independent</b> information.<br><br>" +
     '<table class="allborders" width=800 height=100% border=1><tr>' +
@@ -922,7 +904,6 @@ for (var i = 0; i < informants*2; i++) {
     iLooked + "<i>and</i> I thought about what " + names[0] + ", " + names[1] + ", and " + names[2] + " said.<br>" + iGuess +  //4th
     iLooked + "<i>and</i> I thought about what " + names[0] + ", " + names[1] + ", " + names[2] + ", and " + names[3] + " said.<br>" + iGuess + "</tr></table><br><br>" //5th
   ];
-
 
   if (dependency[0] == 'Independent') {
     if (i < 4) {
@@ -960,9 +941,8 @@ for (var i = 0; i < informants*2; i++) {
       is_html: true,
       stimulus: combinedStim
     };
-    timeline.push(showBalls1);
+    if (example == true) {timeline.push(showBalls1);};
 };
-
 
   // ------------- own ball ----------- //
   var show = {
@@ -1009,7 +989,7 @@ var x = showGuesses("grey", "", egA, egB, true, null, false);
 // --------------------- INTRODUCE TASK ------------------------- //
 var introTask = {
   type: "html-button-response",
-  stimulus: ["Thank you for your opinion.<br><br>" +
+  stimulus: [//"Thank you for your opinion.<br><br>" +
     "Now that the examples are out of the way, you will complete the actual task.<br><br>" +
     "You will have the opportunity to use each of the 2 kinds of social information.<br>" +
     "As you receive information, I will ask you to <strong>guess which jar was selected</strong>.<br>" +
