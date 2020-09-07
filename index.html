@@ -11,11 +11,12 @@
   <script src="./jspsych-6/plugins/jspsych-survey-text-required.js"></script>
   <script src="./jspsych-6/plugins/jspsych-image-button-response.js"></script>
   <script src="./jspsych-6/plugins/jspsych-html-slider-response-garston.js"></script>
+  <script src="./jspsych-6/plugins/jspsych-instructions.js"></script>
   <script src="./jspsych-6/plugins/jspsych-html-slider-response.js"></script>
 	<script src="./js/welcome.js"></script>
   <link href="./jspsych-6/css/jspsych.css" rel="stylesheet" type="text/css"></link>
-  <link href="./jspsych-6/css/saoirse_slider_demo.css" rel="./css/style.css" type="text/css"></link>
-  <!-- <link rel="./css/style.css" href="saoirse_slider_demo.css"></link> -->
+  <!-- <link href="./jspsych-6/css/saoirse_slider_demo.css" rel="./css/style.css" type="text/css"></link> -->
+  <link rel="./css/style.css" href="saoirse_slider_demo.css"></link>
 
   </head>
 
@@ -281,7 +282,7 @@ instructionsline.push(loop_node3);
 var instructionsTimeline = {
   timeline: instructionsline,
 };
-timeline.push(instructionsTimeline);
+// timeline.push(instructionsTimeline);
 
 // ------------------------ PRACTICE DRAWS ----------------------------- //
 var nPracDraws = 12;
@@ -313,7 +314,7 @@ for (y = 0; y < nPracTrials; y++) {  // loops through y practice trials
       choices: ['Click here to draw a ball from the jar'],
       response_ends_trial: true
     };
-    practiceline.push(toDraw);
+    // practiceline.push(toDraw);
 
     var ballDrawn = {        // show the sampled ball
       type: 'html-button-response',
@@ -321,7 +322,7 @@ for (y = 0; y < nPracTrials; y++) {  // loops through y practice trials
       stimulus: ["<img src = img/" + drawBalls[z] + "ball.PNG></img><br>" +
         "You sampled a <font color=" + drawBalls[z] + ">" + drawBalls[z] + "</font> ball.<br>"]
     };
-    practiceline.push(ballDrawn);
+    // practiceline.push(ballDrawn);
   };
 
   var allBallsDrawn = {              // once all z balls have been sampled
@@ -383,7 +384,7 @@ for (y = 0; y < nPracTrials; y++) {  // loops through y practice trials
 var practiceTimeline = {
   timeline: practiceline,
 };
-timeline.push(practiceTimeline);
+// timeline.push(practiceTimeline);
 
 // -------------------- introduce friends ------------------------ //
 var friendsHelp = {
@@ -427,7 +428,7 @@ var loop_node2 = {
   timeline: introloop2,
   loop_function: function(data) {return !instruct2Correct} // stop looping if correct
 };
-timeline.push(loop_node2);
+// timeline.push(loop_node2);
 
 // -------------------------- CHOICE TASK ----------------------------- //
 // describe independent vs. sequential testimony
@@ -841,10 +842,10 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
     choices: ['Click to continue'],
     on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 60)},
     is_html: true,
-    stimulus: egA + lastFriend + egB + lastFriendB + "<br><br>" +
+    stimulus: egA + lastFriend + egB + lastFriendB  +
       "You can see that in both cases, all " + informants + " friends guessed the grey jar was selected.<br><br>" +
       "But how they came to make that guess is different...<br>" +
-      "Let's take a look at what ball each friend received.<br><br>"
+      "Let's take a look at the ball each friend received.<br><br>"
   };
   if (example == true) {timeline.push(showFriendBalls);};
 
@@ -894,7 +895,7 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
     iLooked + "and " + iGuess + //2nd
     iLooked + "and " + iGuess + //3rd
     iLooked + "and " + iGuess + //4th
-    iLooked + "and " + iGuess + "</tr></table><br><br>"];
+    iLooked + "and " + iGuess + "</tr></table><br>"];
 
   var showBallsSeq = ["Here is an example of <b>sequential</b> information.<br><br>" +
     '<table class="outsideborder" width=800 height=100% border=1><tr>' +
@@ -907,28 +908,32 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
     iLooked + "<i>and</i> I thought about what " + names[0] + " said.<br>" + iGuess +  //2nd
     iLooked + "<i>and</i> I thought about what " + names[0] + " and " + names[1] + " said.<br>" + iGuess +  //3rd
     iLooked + "<i>and</i> I thought about what " + names[0] + ", " + names[1] + ", and " + names[2] + " said.<br>" + iGuess +  //4th
-    iLooked + "<i>and</i> I thought about what " + names[0] + ", " + names[1] + ", " + names[2] + ", and " + names[3] + " said.<br>" + iGuess + "</tr></table><br><br>" //5th
+    iLooked + "<i>and</i> I thought about what " + names[0] + ", " + names[1] + ", " + names[2] + ", and " + names[3] + " said.<br>" + iGuess + "</tr></table><br>" //5th
   ];
 
-  if (dependency[0] == 'Independent') {
+  if (dependency[0] == "Independent") {
+    var whichStim = showBallsInd + showBallsSeq;
     if (i < 4) {
-      var combinedStim = showBallsInd + "<br>" + showBallsSeq;
+      var combinedStim = showBallsInd;
+    } else if (i == 4) {
+      var combinedStim = showBallsInd + explainI + "Now let's see which balls were sampled in the <strong>sequential</strong> case.<br>";
+    } else if (i > 4 & i < 9) {
+      var combinedStim = showBallsSeq;
     } else {
-      if (i > 3 & i < 9) {
-        var combinedStim = showBallsInd + explainI + "Now let's see which balls were sampled in the <strong>sequential</strong> case.<br><br>" + showBallsSeq;
-      } else {
-        var combinedStim = showBallsInd + explainI + "Now let's see which balls were sampled in the <strong>sequential</strong> case.<br><br>" + showBallsSeq + explainSq;
-      }
+      var combinedStim = showBallsSeq + explainSq;
     }
-  } else {
+  };
+
+  if (dependency[0] == "Sequential") {
+    var whichStim = showBallsSeq + showBallsInd;
     if (i < 4) {
-      var combinedStim = showBallsSeq + "<br>" + showBallsInd;
+      var combinedStim = showBallsSeq;
+    } else if (i == 4) {
+      var combinedStim = showBallsSeq + explainSq + "Now let's see which balls were sampled in the <strong>independent</strong> case.<br>";
+    } else if (i > 4 & i < 9) {
+      var combinedStim = showBallsInd;
     } else {
-      if (i > 3 & i < 9) {
-        var combinedStim = showBallsSeq + explainSq + "Now let's see which balls were sampled in the <strong>independent</strong> case.<br><br>" + showBallsInd;
-      } else {
-        var combinedStim = showBallsSeq + explainSq + "Now let's see which balls were sampled in the <strong>independent</strong> case.<br><br>" + showBallsInd + explainI;
-      }
+      var combinedStim = showBallsInd + explainI;
     }
   };
 
@@ -936,7 +941,7 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
     var showBallsButton = ['Click to continue'];
   } else {
     var showBallsButton = ['Click to see ' + names[i+1] + "'s ball"];
-  }
+  };
 
     var showBalls1 = {  // after showing example testimonies
       type: 'html-button-response',
@@ -946,14 +951,14 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
       is_html: true,
       stimulus: combinedStim
     };
-    if (example == true) {timeline.push(showBalls1);};
+    // if (example == true) {timeline.push(showBalls1);};
 };
 
   // ------------- choice question ------------------- //
   var twoChoose = {
     type: "survey-multi-choice",
-    preamble: [combinedStim],
-    questions: [{prompt: "In your opinion, which set of social information provides stronger evidence for the grey jar being the selected jar?",
+    preamble: [whichStim],
+    questions: [{prompt: "In your opinion, which set of social information provided stronger evidence for the grey jar being the selected jar?",
                 options: ["" + dependency[0] + " information", "Both provide equal evidence", "" + dependency[1] + " information"],
                 required: true}],
   };
@@ -961,7 +966,7 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
 
   var twoWhy = {
     type: "survey-text-required",
-    preamble: [combinedStim],
+    preamble: [whichStim],
     questions: [{prompt: "Why did you choose that answer?", rows: 3, columns: 40,
                   required: true,
                   placeholder: "",
