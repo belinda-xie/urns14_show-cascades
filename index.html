@@ -10,12 +10,12 @@
   <script src="./jspsych-6/plugins/jspsych-survey-text.js"></script>
   <script src="./jspsych-6/plugins/jspsych-survey-text-required.js"></script>
   <script src="./jspsych-6/plugins/jspsych-image-button-response.js"></script>
-  <script src="./jspsych-6/plugins/jspsych-html-slider-response-garston.js"></script>
+  <!-- <script src="./jspsych-6/plugins/jspsych-html-slider-response-garston.js"></script> -->
   <script src="./jspsych-6/plugins/jspsych-instructions.js"></script>
   <script src="./jspsych-6/plugins/jspsych-html-slider-response.js"></script>
 	<script src="./js/welcome.js"></script>
   <link href="./jspsych-6/css/jspsych.css" rel="stylesheet" type="text/css"></link>
-  <!-- <link href="./jspsych-6/css/saoirse_slider_demo.css" rel="./css/style.css" type="text/css"></link> -->
+  <!-- <link rel="./jspsych-6/css/style.css" href="saoirse_slider_demo.css"></link> -->
   <link rel="./css/style.css" href="saoirse_slider_demo.css"></link>
 
   </head>
@@ -162,6 +162,36 @@ function setDisplay(theClass, theValue) {
 };
 
 // -------------------------- INSTRUCTIONS ---------------------------- //
+
+
+var rate = {              // elicit likelihood rating
+  type: 'html-slider-response',
+  stimulus: "<font color=white>PQ" + [y+1] + "</font><br>" +  // log which trial participant is responding to
+    "<p style=text-align:center>Based on the balls you saw,<br>" +
+    "how likely is it that the selected jar was the " + colourOrder[1] + " jar or the " + colourOrder[0] + " jar?",
+  // min: 0,  // these will differ depending on whether participant was
+  // max: 10,  // randomly assigned to see the slider above vs. below the scale
+  // step: 1,
+  // start: startExtra,
+  labels: labelsExtra,
+  prompt: "<br><br><br><br><br>",
+  // warning: "Your answer must be between 0 and 10.",
+  // no_less: 0,
+  // no_more: 10
+};
+
+//
+// var rate = {
+//   type: 'survey-likert',
+//   questions: [
+//     {prompt: "<font color=white>PQ" + [y+1] + "</font><br>" +  // log which trial participant is responding to
+//       "<p style=text-align:center>Based on the balls you saw,<br>" +
+//       "how likely is it that the selected jar was the " + colourOrder[1] + " jar or the " + colourOrder[0] + " jar?",
+//       name: "<font color=white>PQ" + [y+1] + "</font><br>",
+//       labels: rateLabels}
+//   ]
+// };
+timeline.push(rate);
 
 var instructionsPreempt = {
   type: 'html-button-response',
