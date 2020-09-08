@@ -192,8 +192,9 @@ jsPsych.plugins['html-slider-response-saoirse'] = (function () {
       } else {
         display_element.querySelector('#jspsych-html-slider-response-next').disabled = true;
       }
+    }
 
-    });
+  });
 
     function end_trial() {
 
