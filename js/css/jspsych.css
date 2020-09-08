@@ -5,7 +5,9 @@
  * experiments look polished without any additional styles.
  */
 
- /* Container holding jsPsych content */
+ @import url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700);
+
+/* Container holding jsPsych content */
 
  .jspsych-display-element {
    display: flex;
@@ -39,8 +41,6 @@
  }
 
 /* fonts and type */
-
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700);
 
 .jspsych-display-element {
   font-family: 'Open Sans', 'Arial', sans-serif;
@@ -122,127 +122,4 @@
 /* Control appearance of jsPsych.data.displayData() */
 #jspsych-data-display {
   text-align: left;
-}
-
-/* table {
-  table-layout: fixed;
-  width: 100%;
-} */
-
-/* ADD TABLE SPECS - these were customised by me (BX) 11/12/19*/
-/* table {
-  table-layout: fixed;
-  width: 100%;
-} */
-
-/* this shows outside and inside vertical borders
-is therefore suitable for the independent testimony in urns experiments */
-table.allborders {
-  border-collapse: collapse;
-  border: 1px solid black;
-}
-
-table.allborders tr {border-top:1px solid black;} /*makes top border of first row black*/
-table.allborders tr + tr {border-top:0.5px solid white;} /*makes top border of subsequent rows white*/
-
-/* this shows outside borders only
-is therefore suitable for the sequential testimony in urns experiments */
-table.outsideborder {
-  border-collapse: collapse;
-  border: 1px solid black;
-}
-
-table.outsideborder tr {border-top:1px solid black;}    /*makes inside borders white*/
-table.outsideborder tr + tr {border-top:1px solid white;}
-table.outsideborder td {border-left:1px solid black;}
-table.outsideborder td + td {border-left:1px solid white;}
-table.outsideborder tr:last-child td {border-left:1px solid black;}
-table.outsideborder tr:last-child td + td {border-left:1px solid white;}
-
-/* need to hide default slider and create a new one in order to be able to modify the thumb */
-
-.jspsych-html-slider-response {
-
-  -webkit-appearance: none;
-
-  width: 100%;
-
-  height: 20px;
-
-  background: #d3d3d3;
-
-}
-
-
-
-/* default thumb style, for when it is visible */
-
-.jspsych-html-slider-response::slider-thumb {
-
-  width: 25px; 
-
-  height: 25px; 
-
-  cursor: pointer; 
-
-}
-
-.jspsych-html-slider-response::-webkit-slider-thumb {
-
-  width: 25px; 
-
-  height: 25px;
-
-  cursor: pointer;
-
-}
-
-.jspsych-html-slider-response::-moz-range-thumb {
-
-  width: 25px;
-
-  height: 25px; 
-
-  cursor: pointer; 
-
-}
-
-
-
-/* hidden thumb */
-
-.slider-hidden-thumb::slider-thumb {
-
-  -webkit-appearance: none;
-
-  appearance: none;
-
-  width: 0px;
-
-  height: 0px;
-
-}
-
-.slider-hidden-thumb::-webkit-slider-thumb {
-
-  -webkit-appearance: none;
-
-  appearance: none;
-
-  width: 0px;
-
-  height: 0px;
-
-}
-
-.slider-hidden-thumb::-moz-range-thumb {
-
-  -webkit-appearance: none;
-
-  appearance: none;
-
-  width: 0px;
-
-  height: 0px;
-
 }

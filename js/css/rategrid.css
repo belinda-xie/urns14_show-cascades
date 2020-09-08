@@ -1,0 +1,45 @@
+.ratecontainer {
+	display: grid;
+	margin: 3%;
+	grid-template-columns: 1fr 150px 1fr;
+	grid-template-rows: 50px 150px 100px 1fr;
+	grid-template-areas:
+	"head head head"
+	"mid center mid"
+	"foot foot foot";
+	position: relative;
+	justify-content: center;
+	align-items: center;
+}
+
+.raterock {
+	display: grid;
+	height: 150px;
+	width: 150px;
+	border-style: solid;
+	border-color: black;
+	border-width: 1px;
+	justify-content: center;
+	align-content: center;
+}
+
+.ratedot {
+	height: 15px;
+	width: 15px;
+	background-color: #808080;
+	border-radius: 50%;
+}
+
+.ratequestion {
+	grid-column: 1 / 3;
+	grid-row: 2 / 3;
+}
+
+/* .rankcontainer {
+	display: grid;
+	grid-template-columns: 1fr 1000px 1fr;
+	grid-template-rows: 50px 700px 1fr;
+	position: relative;
+	justify-content: center;
+	align-items: center;
+} */

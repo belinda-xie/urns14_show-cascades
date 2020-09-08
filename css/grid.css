@@ -1,0 +1,140 @@
+
+	.container {
+		display: grid;
+		grid-template-columns: 1fr 300px 500px 300px 1fr;
+		grid-template-rows: 80px 750px 90px;
+		}
+	
+	.instructions {
+		grid-column: 1 / 6;
+		grid-row: 1 / 2;
+		align-self: top;
+		top: 10px;
+		/* align-self: end; */
+	}
+	
+	.leftbox {
+		grid-column: 1 / 2;
+		grid-row: 2 / 3;
+		color: #FF4500;
+		margin-top: 20px;
+	}
+	
+	.distbuilderbox {
+		grid-column: 3 / 4;
+		grid-row: 2 / 3;
+		justify-self: center;
+		align-self: center;
+	}
+	
+	.rightbox {
+		grid-column: 5 / 6;
+		grid-row: 2 / 3;
+	}
+
+	.legendbox {
+		grid-column: 3 / 4;
+		grid-row: 3 / 4;
+		justify-self: center;
+		align-self: flex-start;
+		font-size: 100%;
+		top: 0px;
+	}
+	
+	.submit {
+		grid-column: 2 / 3;
+		grid-row: 2 / 4;
+		display: inline-block;
+		padding: 6px 12px;
+		margin: 0px;
+		font-size: 14px;
+		font-weight: 400;
+		font-family: 'Open Sans', 'Arial', sans-serif;
+		cursor: pointer;
+		line-height: 1.4;
+		text-align: center;
+		white-space: nowrap;
+		vertical-align: middle;
+		background-image: none;
+		border: 1px solid transparent;
+		border-radius: 4px;
+		color: #333;
+		background-color: #fff;
+		border-color: #ccc;
+		position: absolute;
+		bottom: 10px;
+		left: 50%;
+		align-self: flex-end;
+		margin-left: -70px;
+		}
+
+.submit:hover {
+  background-color: #ddd;
+  border-color: #aaa;
+}
+
+.submit:disabled {
+	background-color: #eee;
+	color: #aaa;
+	border-color: #ccc;
+	cursor: not-allowed;
+}
+
+.samptop {
+	grid-column: 1 / 4;
+	grid-row: 1 / 2;
+	align-self: center;
+}
+
+.sampleft {
+	grid-column: 1 / 4;
+	grid-row: 2 / 3;
+	align-self: center;
+}
+
+.sampright {
+	grid-column: 4 / 6;
+	grid-row: 1 / 4;
+	align-self: center;
+}
+
+.sampcontbtn {
+	grid-column: 3 / 4;
+	grid-row: 3 / 4;
+	align-self: center;
+}
+
+@import "lesshat";
+
+.star-ratings-css {
+  unicode-bidi: bidi-override;
+  color: #dbdbdb;
+  font-size: 24px;
+  height: 24px;
+  width: 100px;
+  margin: 0 auto;
+  position: relative;
+  padding: 0;
+  /* text-shadow: 0px 1px 0 #cccccc; */
+  zoom: 150%;
+}
+
+.star-ratings-css-top {
+    color: #ffd314;
+    padding: 0;
+    position: absolute;
+    z-index: 1;
+    display: block;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+  }
+
+.star-ratings-css-bottom {
+    padding: 0;
+    display: block;
+    z-index: 0;
+  }
+
+
+

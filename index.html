@@ -1,24 +1,30 @@
 <!doctype html>
 <html>
-  <head>
+
+<head>
   <title>Jars</title>
   <script src="./js/jquery.min.js"></script>
-  <script src="./jspsych-6/jspsych.js"></script>
-  <script src="./jspsych-6/plugins/jspsych-survey-multi-choice.js"></script>
-	<script src="./jspsych-6/plugins/jspsych-html-button-response.js"></script>
-  <script src="./jspsych-6/plugins/jspsych-survey-likert.js"></script>
-  <script src="./jspsych-6/plugins/jspsych-survey-text.js"></script>
-  <script src="./jspsych-6/plugins/jspsych-survey-text-required.js"></script>
-  <script src="./jspsych-6/plugins/jspsych-image-button-response.js"></script>
-  <!-- <script src="./jspsych-6/plugins/jspsych-html-slider-response-garston.js"></script> -->
-  <script src="./jspsych-6/plugins/jspsych-instructions.js"></script>
-  <script src="./jspsych-6/plugins/jspsych-html-slider-response.js"></script>
+  <script src="./js/distributionbuilder.min.js"></script>
+  <script src="./js/jspsych.js"></script>
+  <script src="./js/plugins/jspsych-survey-multi-choice.js"></script>
+	<script src="./js/plugins/jspsych-html-button-response.js"></script>
+  <script src="./js/plugins/jspsych-survey-likert.js"></script>
+  <script src="./js/plugins/jspsych-survey-text.js"></script>
+  <script src="./js/plugins/jspsych-survey-text-required.js"></script>
+  <script src="./js/plugins/jspsych-image-button-response.js"></script>
+  <script src="./js/plugins/jspsych-instructions.js"></script>
+  <script src="./js/plugins/jspsych-html-slider-response.js"></script>
 	<script src="./js/welcome.js"></script>
-  <link href="./jspsych-6/css/jspsych.css" rel="stylesheet" type="text/css"></link>
-  <!-- <link rel="./jspsych-6/css/style.css" href="saoirse_slider_demo.css"></link> -->
-  <link rel="./css/style.css" href="saoirse_slider_demo.css"></link>
+  <link href="./css/jspsych.css" rel="stylesheet" type="text/css">
+    </link>
+    <link href="./css/style.css" rel="stylesheet" type="text/css">
+    </link>
+    <link href="./css/saoirse_slider_demo.css" rel="stylesheet" type="text/css">
+    </link>
+    <link rel="./css/style.css" href="saoirse_slider_demo.css">
+    </link>
 
-  </head>
+</head>
 
   <body>
 	  <div id="welcome"></div>
@@ -162,6 +168,27 @@ function setDisplay(theClass, theValue) {
 };
 
 // -------------------------- INSTRUCTIONS ---------------------------- //
+
+var confRating = {
+            type: 'html-slider-response',
+            min: 0,
+            max: 100,
+            step: 1,
+            stimulus: "<p class=question_text>Based on the arguments you saw, to what extent do you agree that the economy in question will continue to improve? <br><br>Please rate your agreement on the scale below from 0 (strongly disagree) to 100 (strongly agree)</p>",
+            labels: ['<p class=question_text>strongly disagree (0)</p>', '<p class=question_text>disagree (25)</p>', '<p class=question_text>neutral (50)</p>', '<p class=question_text>agree (75)</p>', '<p class=question_text>strongly agree (100)</p>'],
+            prompt: '<p>Your answer is <span id="answer-display"></span></p><br><br>',
+            require_movement: true,
+            on_load: function () {
+                var input = document.querySelector('#jspsych-html-slider-response')
+
+                input.addEventListener('input', function () {
+                    document.querySelector('#answer-display').innerText = input.valueAsNumber.toString()
+                })
+
+            }
+            //prompt: "<p>Based on the arguments you saw, to what extent do you agree that the economy in question will continue to improve ? Please rate your agreement on the scale below from 0 (strongly disagree) to 100 (strongly agree)</p>"
+        };
+        timeline.push(confRating)
 
 
 var rate = {              // elicit likelihood rating
@@ -536,25 +563,25 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
 
   var egI1 =
   picsI + "</tr>" +  // independent testimony of the 1st friend
-      iLooked + "and " + iGuess + "</tr></table><br><br>" //1st
+      iLooked + "and " + iGuess + "</tr></table><br>" //1st
 
   var egI2 =
   picsI + "</tr>" +  // independent testimony of the 2nd friend
       iLooked + "and " + iGuess + //1st
-      iLooked + "and " + iGuess + "</tr></table><br><br>" //2nd
+      iLooked + "and " + iGuess + "</tr></table><br>" //2nd
 
   var egI3 = //"<table width=900 height=100% border=0><tr>" +
   picsI + "</tr>" +  // independent testimony of the 3rd friend
       iLooked + "and " + iGuess + //1st
       iLooked + "and " + iGuess + //2nd
-      iLooked + "and " + iGuess + "</tr></table><br><br>" //3rd
+      iLooked + "and " + iGuess + "</tr></table><br>" //3rd
 
   var egI4 = //"<table width=900 height=100% border=0><tr>" +
   picsI + "</tr>" +  // independent testimony of the 4th friend
       iLooked + "and " + iGuess + //1st
       iLooked + "and " + iGuess + //2nd
       iLooked + "and " + iGuess + //3rd
-      iLooked + "and " + iGuess + "</tr></table><br><br>" //4th
+      iLooked + "and " + iGuess + "</tr></table><br>" //4th
 
   var egI5 = //"<table width=900 height=100% border=0><tr>" +
   picsI + "</tr>" +  // independent testimony of the 5th friend
@@ -562,29 +589,29 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
       iLooked + "and " + iGuess + //2nd
       iLooked + "and " + iGuess + //3rd
       iLooked + "and " + iGuess + //4th
-      iLooked + "and " + iGuess + "</tr></table><br><br>" //5th
+      iLooked + "and " + iGuess + "</tr></table><br>" //5th
 
   var egSq1 =  //"<table width=900 height=100% border=0><tr>" +
   picsSq + "</tr>" +   // sequential testimony of the 1st friend
-      iLooked + "and " + iGuess + "</tr></table><br><br>" //1st
+      iLooked + "and " + iGuess + "</tr></table><br>" //1st
 
   var egSq2 =  //"<table width=900 height=100% border=0><tr>" +
   picsSq + "</tr>" +   // sequential testimony of the 2nd friend
       iLooked + "and " + iGuess + // 1st
-      iLooked + "<i>and</i> I thought about what " + names[0] + " said.<br>" + iGuess + "</tr></table><br><br>" //2nd
+      iLooked + "<i>and</i> I thought about what " + names[0] + " said.<br>" + iGuess + "</tr></table><br>" //2nd
 
   var egSq3 =  //"<table width=900 height=100% border=0><tr>" +
   picsSq + "</tr>" +   // sequential testimony of the 3rd friend
       iLooked + "and " + iGuess + // 1st
       iLooked + "<i>and</i> I thought about what " + names[0] + " said.<br>" + iGuess +  //2nd
-      iLooked + "<i>and</i> I thought about what " + names[0] + " and " + names[1] + " said.<br>" + iGuess + "</tr></table><br><br>" //3rd
+      iLooked + "<i>and</i> I thought about what " + names[0] + " and " + names[1] + " said.<br>" + iGuess + "</tr></table><br>" //3rd
 
   var egSq4 =  //"<table width=900 height=100% border=0><tr>" +
   picsSq + "</tr>" +   // sequential testimony of the 4th friend
       iLooked + "and " + iGuess + // 1st
       iLooked + "<i>and</i> I thought about what " + names[0] + " said.<br>" + iGuess +  //2nd
       iLooked + "<i>and</i> I thought about what " + names[0] + " and " + names[1] + " said.<br>" + iGuess +  //3rd
-      iLooked + "<i>and</i> I thought about what " + names[0] + ", " + names[1] + ", and " + names[2] + " said.<br>" + iGuess + "</tr></table><br><br>" //4th
+      iLooked + "<i>and</i> I thought about what " + names[0] + ", " + names[1] + ", and " + names[2] + " said.<br>" + iGuess + "</tr></table><br>" //4th
 
   var egSq5 =  //"<table width=900 height=100% border=0><tr>" +
   picsSq + "</tr>" +   // sequential testimony of the 5th friend
@@ -592,7 +619,7 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
       iLooked + "<i>and</i> I thought about what " + names[0] + " said.<br>" + iGuess +  //2nd
       iLooked + "<i>and</i> I thought about what " + names[0] + " and " + names[1] + " said.<br>" + iGuess +  //3rd
       iLooked + "<i>and</i> I thought about what " + names[0] + ", " + names[1] + ", and " + names[2] + " said.<br>" + iGuess +  //4th
-      iLooked + "<i>and</i> I thought about what " + names[0] + ", " + names[1] + ", " + names[2] + ", and " + names[3] + " said.<br>" + iGuess + "</tr></table><br><br>" //5th
+      iLooked + "<i>and</i> I thought about what " + names[0] + ", " + names[1] + ", " + names[2] + ", and " + names[3] + " said.<br>" + iGuess + "</tr></table><br>" //5th
 
   if (dependency[0] == 'Independent') { // if the i condition is randomised to come first
     var egFriend1 = egI1;   // then the first friend gives independent testimony
@@ -981,7 +1008,7 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
       is_html: true,
       stimulus: combinedStim
     };
-    // if (example == true) {timeline.push(showBalls1);};
+    if (example == true) {timeline.push(showBalls1);};
 };
 
   // ------------- choice question ------------------- //
@@ -996,7 +1023,7 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
 
   var twoWhy = {
     type: "survey-text-required",
-    preamble: [whichStim],
+    preamble: [""],
     questions: [{prompt: "Why did you choose that answer?", rows: 3, columns: 40,
                   required: true,
                   placeholder: "",
