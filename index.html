@@ -13,17 +13,12 @@
   <script src="./js/plugins/jspsych-survey-text-required.js"></script>
   <script src="./js/plugins/jspsych-image-button-response.js"></script>
   <script src="./js/plugins/jspsych-instructions.js"></script>
-  <script src="./js/plugins/jspsych-html-slider-response.js"></script>
+  <script src="./js/plugins/jspsych-html-slider-response-saoirse.js"></script>
 	<script src="./js/welcome.js"></script>
-  <link href="./css/jspsych.css" rel="stylesheet" type="text/css">
-    </link>
-    <link href="./css/style.css" rel="stylesheet" type="text/css">
-    </link>
-    <link href="./css/saoirse_slider_demo.css" rel="stylesheet" type="text/css">
-    </link>
-    <link rel="./css/style.css" href="saoirse_slider_demo.css">
-    </link>
-
+  <link href="./css/jspsych.css" rel="stylesheet" type="text/css"></link>
+  <link href="./css/style.css" rel="stylesheet" type="text/css"></link>
+  <link href="./css/saoirse_slider_demo.css" rel="stylesheet" type="text/css"></link>
+  <link rel="./css/style.css" href="saoirse_slider_demo.css"></link>
 </head>
 
   <body>
@@ -34,7 +29,7 @@
 
 // ----------------------- URNS EXPT 14 -------------------------- //
 // 2 (dependency: i, sq) within-subjects design
-// only 5-informant condition (remove 3-infomrant condition) ---- //
+// only 5-informant condition (remove 3-informant condition) ---- //
 // -------------------------------------------------------------- //
 
 // initialise timeline
@@ -168,58 +163,6 @@ function setDisplay(theClass, theValue) {
 };
 
 // -------------------------- INSTRUCTIONS ---------------------------- //
-
-var confRating = {
-            type: 'html-slider-response',
-            min: 0,
-            max: 100,
-            step: 1,
-            stimulus: "<p class=question_text>Based on the arguments you saw, to what extent do you agree that the economy in question will continue to improve? <br><br>Please rate your agreement on the scale below from 0 (strongly disagree) to 100 (strongly agree)</p>",
-            labels: ['<p class=question_text>strongly disagree (0)</p>', '<p class=question_text>disagree (25)</p>', '<p class=question_text>neutral (50)</p>', '<p class=question_text>agree (75)</p>', '<p class=question_text>strongly agree (100)</p>'],
-            prompt: '<p>Your answer is <span id="answer-display"></span></p><br><br>',
-            require_movement: true,
-            on_load: function () {
-                var input = document.querySelector('#jspsych-html-slider-response')
-
-                input.addEventListener('input', function () {
-                    document.querySelector('#answer-display').innerText = input.valueAsNumber.toString()
-                })
-
-            }
-            //prompt: "<p>Based on the arguments you saw, to what extent do you agree that the economy in question will continue to improve ? Please rate your agreement on the scale below from 0 (strongly disagree) to 100 (strongly agree)</p>"
-        };
-        timeline.push(confRating)
-
-
-var rate = {              // elicit likelihood rating
-  type: 'html-slider-response',
-  stimulus: "<font color=white>PQ" + [y+1] + "</font><br>" +  // log which trial participant is responding to
-    "<p style=text-align:center>Based on the balls you saw,<br>" +
-    "how likely is it that the selected jar was the " + colourOrder[1] + " jar or the " + colourOrder[0] + " jar?",
-  // min: 0,  // these will differ depending on whether participant was
-  // max: 10,  // randomly assigned to see the slider above vs. below the scale
-  // step: 1,
-  // start: startExtra,
-  labels: labelsExtra,
-  prompt: "<br><br><br><br><br>",
-  // warning: "Your answer must be between 0 and 10.",
-  // no_less: 0,
-  // no_more: 10
-};
-
-//
-// var rate = {
-//   type: 'survey-likert',
-//   questions: [
-//     {prompt: "<font color=white>PQ" + [y+1] + "</font><br>" +  // log which trial participant is responding to
-//       "<p style=text-align:center>Based on the balls you saw,<br>" +
-//       "how likely is it that the selected jar was the " + colourOrder[1] + " jar or the " + colourOrder[0] + " jar?",
-//       name: "<font color=white>PQ" + [y+1] + "</font><br>",
-//       labels: rateLabels}
-//   ]
-// };
-timeline.push(rate);
-
 var instructionsPreempt = {
   type: 'html-button-response',
   choices: ['Click here to begin'],
@@ -405,7 +348,7 @@ for (y = 0; y < nPracTrials; y++) {  // loops through y practice trials
   practiceline.push(allBallsDrawn);
 
   var rate = {              // elicit likelihood rating
-    type: 'html-slider-response',
+    type: 'html-slider-response-saoirse',
     stimulus: "<font color=white>PQ" + [y+1] + "</font><br>" +  // log which trial participant is responding to
       "<p style=text-align:center>Based on the balls you saw,<br>" +
       "how likely is it that the selected jar was the " + colourOrder[1] + " jar or the " + colourOrder[0] + " jar?",
@@ -527,12 +470,12 @@ var gwJars = {
   stimulus: ["<p align='center'><table width=700 height=100% border=0><tr><td align=center valign=center>" +
     // "<img src = 'img/greyjar.PNG'></img></td><td align=center valign=center><img src = 'img/whitejar.png'></img></td></tr></table></p>" +
     "<img src = 'img/greyjar.PNG'></img></td><td align=center valign=center><img src = 'img/whitejar.png'></img></td></tr></table>" +
-    "For this example, we will use grey and white jars.<br><br>" +
+    "For this example, we will use gray and white jars.<br><br>" +
     "As you can see, the ball proportions in these jars are the same as the ball proportions in the " + colourOrder[0] + " and " + colourOrder[1] + " jars that you previously saw.<br>" +
-    "Of the 120 balls in the grey jar, 100 are grey, and 20 are white.<br>" +
-    "In the white jar, 100 balls are white, and 20 are grey.<br><br>" +
+    "Of the 120 balls in the gray jar, 100 are gray, and 20 are white.<br>" +
+    "In the white jar, 100 balls are white, and 20 are gray.<br><br>" +
     "Like you, my friends understand that the colour of the ball does not perfectly predict the colour of the jar<br>" +
-    "(that is, there is a small chance of drawing a white ball from the grey jar, or a grey ball from the white jar).<br><br>"],
+    "(that is, there is a small chance of drawing a white ball from the gray jar, or a gray ball from the white jar).<br><br>"],
   choices: ['Click here to continue'],
   button_html: '<button class="jspsych-btn" style="display:none">%choice%</button>',
   on_start: function() {setTimeout(function() {setDisplay("jspsych-btn","")}, 80)}
@@ -701,7 +644,7 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
   timeline.push(ex1);
 
   var rating1 = {              // elicit likelihood rating
-    type: 'html-slider-response-garston',
+    type: 'html-slider-response-saoirse',
     stimulus: "<font color=white>" + trialDep + "-1" + "</font><br>" +
       "<p style=text-align:center>Based on the guess(es) so far," +
       "<p>how likely is it that the selected jar was the " + colourX + " jar or the " + colourY + " jar?",
@@ -728,7 +671,7 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
   timeline.push(ex2);
 
   var rating2 = {              // elicit likelihood rating
-    type: 'html-slider-response-garston',
+    type: 'html-slider-response-saoirse',
     stimulus: "<font color=white>" + trialDep + "-2" + "</font><br>" +
       "<p style=text-align:center>Based on the guess(es) so far," +
       "<p>how likely is it that the selected jar was the " + colourX + " jar or the " + colourY + " jar?",
@@ -755,7 +698,7 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
   timeline.push(ex3);
 
   var rating3 = {              // elicit likelihood rating
-    type: 'html-slider-response-garston',
+    type: 'html-slider-response-saoirse',
     stimulus: "<font color=white>" + trialDep + "-3" + "</font><br>" +
       "<p style=text-align:center>Based on the guess(es) so far," +
       "<p>how likely is it that the selected jar was the " + colourX + " jar or the " + colourY + " jar?",
@@ -783,7 +726,7 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
   timeline.push(ex4);
 
   var rating4 = {              // elicit likelihood rating
-    type: 'html-slider-response-garston',
+    type: 'html-slider-response-saoirse',
     stimulus: "<font color=white>" + trialDep + "-4" + "</font><br>" +
       "<p style=text-align:center>Based on the guess(es) so far," +
       "<p>how likely is it that the selected jar was the " + colourX + " jar or the " + colourY + " jar?",
@@ -811,7 +754,7 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
   if (example == false) { timeline.push(ex5);}
 
   var rating5 = {              // elicit likelihood rating
-    type: 'html-slider-response-garston',
+    type: 'html-slider-response-saoirse',
     stimulus: "<font color=white>" + trialDep + "-5" + "</font><br>" +
       "<p style=text-align:center>Based on the guess(es) so far," +
       "<p>how likely is it that the selected jar was the " + colourX + " jar or the " + colourY + " jar?",
@@ -900,7 +843,7 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
     on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 60)},
     is_html: true,
     stimulus: egA + lastFriend + egB + lastFriendB  +
-      "You can see that in both cases, all " + informants + " friends guessed the grey jar was selected.<br><br>" +
+      "You can see that in both cases, all " + informants + " friends guessed the gray jar was selected.<br><br>" +
       "But how they came to make that guess is different...<br>" +
       "Let's take a look at the ball each friend received.<br><br>"
   };
@@ -908,16 +851,16 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
 
   var whichBall = Array(10).fill('questionball.png');
 
-  var explainI = ["Here you can see that each friend made a guess according to the ball they received.<br><br>" +
+  var explainI = ["Here you can see that each friend made a guess according to the gray ball they received.<br><br>" +
     "Since the friends are independent of each other, the only evidence they have comes from their own ball.<br><br>"];
 
   var explainSq = ["Here you can see that the last two friends have copied the guesses given by earlier friends.<br><br>" +
-    names[3] + " and " + names[4] + " guessed 'grey' even though they each received a white ball.<br><br>" +
+    names[3] + " and " + names[4] + " guessed 'gray' even though they each received a white ball.<br><br>" +
     "Why did this happen?<br><br>" +
     "Let's think about " + names[4] + "'s situation.<br>" +
-    "She has heard 4 guesses for the grey jar but now receives 1 white ball.<br>" +
-    "Given this evidence, it is possible that the selected jar was the grey jar and not the white jar.<br>" +
-    names[4] + " is being influenced by evidence she's heard from other people - and she guesses 'grey'.<br><br>"]
+    "She has heard 4 guesses for the gray jar but now receives 1 white ball.<br>" +
+    "Given this evidence, it is possible that the selected jar was the gray jar and not the white jar.<br>" +
+    names[4] + " is being influenced by evidence she's heard from other people - and she guesses 'gray'.<br><br>"]
 
   for (var i = 0; i < informants*2; i++) {
 
@@ -1015,7 +958,7 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
   var twoChoose = {
     type: "survey-multi-choice",
     preamble: [whichStim],
-    questions: [{prompt: "In your opinion, which set of social information provided stronger evidence for the grey jar being the selected jar?",
+    questions: [{prompt: "In your opinion, which set of social information provided stronger evidence for the gray jar being the selected jar?",
                 options: ["" + dependency[0] + " information", "Both provide equal evidence", "" + dependency[1] + " information"],
                 required: true}],
   };
@@ -1053,7 +996,7 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
   if (example == false) {timeline.push(showBall);};
 
   var ratingFinal = {              // elicit likelihood rating
-    type: 'html-slider-response-garston',
+    type: 'html-slider-response-saoirse',
     stimulus: "<font color=white>" + trialDep + "-" + (informants + 1) + "</font><br>" +
       "<p style=text-align:center>Based on my friends' guesses and the ball you saw,<br>" +
       "how likely is it that the selected jar was the " + colourX + " jar or the " + colourY + " jar?",
@@ -1071,7 +1014,7 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
 };
 
 //practice
-var x = showGuesses("grey", "", egA, egB, true, null, false);
+var x = showGuesses("gray", "", egA, egB, true, null, false);
 
 // --------------------- INTRODUCE TASK ------------------------- //
 var introTask = {
