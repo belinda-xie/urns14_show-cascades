@@ -50,7 +50,7 @@ var filename = "urns-expt14_" + pid + "_turkcode_" + turkcode;
 // specify images to preload
 var images = ['img/closeddoor.jpg', 'img/redjar.png', 'img/bluejar.png', 'img/greenjar.png', 'img/purplejar.png', 'img/blackjar.jpg',
     'img/questionball.png', 'img/redball.PNG', 'img/blueball.PNG', 'img/greenball.PNG', 'img/purpleball.PNG', 'img/redballsmall.png', 'img/blueballsmall.png', 'img/greenballsmall.png', 'img/purpleballsmall.png',
-    'img/attnCheck.JPG', 'img/greyjar.PNG', 'img/whitejar.PNG', 'img/whiteball.png', 'img/greyball.PNG'];
+    'img/attnCheck.png', 'img/greyjar.PNG', 'img/whitejar.PNG', 'img/whiteball.png', 'img/greyball.PNG'];
 jsPsych.pluginAPI.preloadImages(images);
 
 // -------------------- RANDOMISE VARIABLES ------------------------ //
@@ -282,7 +282,7 @@ instructionsline.push(loop_node3);
 var instructionsTimeline = {
   timeline: instructionsline,
 };
-// timeline.push(instructionsTimeline);
+timeline.push(instructionsTimeline);
 
 // ------------------------ PRACTICE DRAWS ----------------------------- //
 var nPracDraws = 12;
@@ -314,7 +314,7 @@ for (y = 0; y < nPracTrials; y++) {  // loops through y practice trials
       choices: ['Click here to draw a ball from the jar'],
       response_ends_trial: true
     };
-    // practiceline.push(toDraw);
+    practiceline.push(toDraw);
 
     var ballDrawn = {        // show the sampled ball
       type: 'html-button-response',
@@ -322,7 +322,7 @@ for (y = 0; y < nPracTrials; y++) {  // loops through y practice trials
       stimulus: ["<img src = img/" + drawBalls[z] + "ball.PNG></img><br>" +
         "You sampled a <font color=" + drawBalls[z] + ">" + drawBalls[z] + "</font> ball.<br>"]
     };
-    // practiceline.push(ballDrawn);
+    practiceline.push(ballDrawn);
   };
 
   var allBallsDrawn = {              // once all z balls have been sampled
@@ -384,7 +384,7 @@ for (y = 0; y < nPracTrials; y++) {  // loops through y practice trials
 var practiceTimeline = {
   timeline: practiceline,
 };
-// timeline.push(practiceTimeline);
+timeline.push(practiceTimeline);
 
 // -------------------- introduce friends ------------------------ //
 var friendsHelp = {
@@ -428,7 +428,7 @@ var loop_node2 = {
   timeline: introloop2,
   loop_function: function(data) {return !instruct2Correct} // stop looping if correct
 };
-// timeline.push(loop_node2);
+timeline.push(loop_node2);
 
 // -------------------------- CHOICE TASK ----------------------------- //
 // describe independent vs. sequential testimony
@@ -629,7 +629,6 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
     on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 10)},
     is_html: true,
     stimulus: egA + showPicsA + "<br><br>"
-    // stimulus: egA + picsI + "</tr></table>" + "<br><br>"
   };
   timeline.push(exA);
 
@@ -1113,7 +1112,7 @@ var attnCheck = {
   questions: [{prompt: "",
                 placeholder: "",
                 name: "attn"}],
-  preamble: ["<div class = 'center-content'><img src = 'img/attnCheck.JPG' width = '350'></img>"]
+  preamble: ["<div class = 'center-content'><img src = 'img/attnCheck.png' width = '350'></img>"]
 };
 timeline.push(attnCheck);
 
