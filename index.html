@@ -141,7 +141,7 @@ jsPsych.data.addProperties({
 jsPsych.init({
   timeline: timeline,
   preload_images: images,
-  // on_trial_finish: function(data){saveData(filename, jsPsych.data.get().csv())},  // use for UNSW server - uncomment to locally save data file as csv
+  on_trial_finish: function(data){saveData(filename, jsPsych.data.get().csv())},  // use for UNSW server - uncomment to locally save data file as csv
   on_finish: function() {
     endExperiment( jsPsych.data.get().csv(), function() { document.write('<div id="endscreen" class="endscreen" style="width:1000px"><div class="endscreen" style="text-align:center; border:0px solid; padding:10px; font-size:120%; width:800px; float:right"><p><br><br><br>All done!<br><br>Your completion code is <span id="turkcode" style="font-weight:bold;font-size:130%">' + turkcode + '</span>. To receive payment for the HIT, return to the Amazon Mechanical Turk page and enter this code. Please contact us if something goes wrong and we\'ll fix it as quickly as possible.</p></div></div>') })
   }
@@ -352,8 +352,8 @@ for (y = 0; y < nPracTrials; y++) {  // loops through y practice trials
     stimulus: "<font color=white>PQ" + [y+1] + "</font><br>" +  // log which trial participant is responding to
       "<p style=text-align:center>Based on the balls you saw,<br>" +
       "how likely is it that the selected jar was the " + colourOrder[1] + " jar or the " + colourOrder[0] + " jar?",
-    min: 0,  // these will differ depending on whether participant was
-    max: 10,  // randomly assigned to see the slider above vs. below the scale
+    min: minExtra,  // these will differ depending on whether participant was
+    max: maxExtra,  // randomly assigned to see the slider above vs. below the scale
     step: 1,
     start: startExtra,
     labels: labelsExtra,
