@@ -172,7 +172,7 @@ jsPsych.plugins['html-slider-response-saoirse'] = (function () {
       var no_more = trial.no_more
       var warning = trial.warning
 
-      response.response = display_element.querySelector('#jspsych-html-slider-response-response').value;
+      response.response = display_element.querySelector('#jspsych-html-slider-response').value;
 
       if(response.response < no_less || response.response > no_more){
         window.alert(warning)
