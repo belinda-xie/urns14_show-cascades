@@ -10,7 +10,6 @@
 	<script src="./js/plugins/jspsych-html-button-response.js"></script>
   <script src="./js/plugins/jspsych-survey-likert.js"></script>
   <script src="./js/plugins/jspsych-survey-text.js"></script>
-  <script src="./js/plugins/jspsych-survey-text-required.js"></script>
   <script src="./js/plugins/jspsych-image-button-response.js"></script>
   <script src="./js/plugins/jspsych-instructions.js"></script>
   <script src="./js/plugins/jspsych-html-slider-response-saoirse.js"></script>
@@ -133,7 +132,7 @@ jsPsych.data.addProperties({
   training: training,           // control or intervention?
   dependency1: dependency[0],   // dependency condition of round 1
   dependency2: dependency[1],   // dependency condition of round 2
-  names: names                  // friends' names
+  names: names[0,1,2,3,4]                  // friends' names
 });
 
 jsPsych.init({
@@ -961,7 +960,7 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
   if (example == true) {timeline.push(twoChoose);}; // only ask in example runs
 
   var twoWhy = {
-    type: "survey-text-required",
+    type: "survey-text",
     preamble: [""],        // no examples shown above this question (consistent w previous experiments)
     questions: [{prompt: "Why did you choose that answer?", rows: 3, columns: 40,
                   required: true,
