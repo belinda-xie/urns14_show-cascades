@@ -9,7 +9,7 @@
   <script src="./js/plugins/jspsych-survey-multi-choice.js"></script>
 	<script src="./js/plugins/jspsych-html-button-response.js"></script>
   <script src="./js/plugins/jspsych-survey-likert.js"></script>
-  <script src="./js/plugins/jspsych-survey-text.js"></script>
+  <script src="./js/plugins/jspsych-survey-text-required.js"></script>
   <script src="./js/plugins/jspsych-image-button-response.js"></script>
   <script src="./js/plugins/jspsych-instructions.js"></script>
   <script src="./js/plugins/jspsych-html-slider-response-saoirse.js"></script>
@@ -56,10 +56,6 @@ var informants = 5; // only 5 informant-conditions previously showed dependency 
 var dependency = ['Independent', 'Sequential'];             // dependency condition
 var dependency = jsPsych.randomization.shuffle(dependency); // randomise order
 // console.log(dependency);
-
-var training = ['intervention', 'control'];     // either participant receives intervention, or does not (control)
-var training = jsPsych.randomization.sampleWithoutReplacement(training, 1);
-console.log(training);
 
 // randomly select the appropriate number of images/names to represent the friends
 var friends = ['img/woman1.png', 'img/woman2.png', 'img/woman3.png', 'img/woman4.jpg', 'img/woman5.png', 'img/woman6.jpg', 'img/woman7.png'];
@@ -129,10 +125,9 @@ jsPsych.data.addProperties({
   colourPart1: colourOrder[0],  // colour of ball participant saw in round 1
   colourPart2: colourOrder[2],  // colour of ball participant saw in round 2
   slider: extra,                // does slider begin above/below the scale?
-  training: training,           // control or intervention?
   dependency1: dependency[0],   // dependency condition of round 1
   dependency2: dependency[1],   // dependency condition of round 2
-  names: names[0,1,2,3,4]                  // friends' names
+  names: names                  // friends' names
 });
 
 jsPsych.init({
@@ -164,7 +159,7 @@ var instructionsPreempt = {     // introduce experiment
   type: 'html-button-response',
   choices: ['Click here to begin'],
   button_html: '<button class="jspsych-btn" style="display:none">%choice%</button>',
-  on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 70)},
+  on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 7000)},
   is_html: true,
   stimulus: "The experiment will begin now.<br><br>The first few pages will show the instructions.<br>Make sure to read them carefully, as you will be asked questions to check that you understand them." +
   "<br><br>If you answer a question incorrectly, you will be taken back to the instructions page.<br><br>"
@@ -176,7 +171,7 @@ var instructions1 = {           // introduce ball proportions in jars
   type: 'html-button-response',
   choices: ['Click here to continue'],
   button_html: '<button class="jspsych-btn" style="display:none">%choice%</button>',
-  on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 120)},
+  on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 12000)},
   is_html: true,
   stimulus: "<p align='center'><table width=700 height=100% border=0><tr><td align=center valign=center>" +
     "<img src = 'img/" + colourOrder[0] + "jar.png'></img></td><td align=center valign=center><img src = 'img/" + colourOrder[1] + "jar.png'></img></td></tr></table>" +
@@ -235,7 +230,7 @@ var task = {
   type: 'html-button-response',
   button_html: '<button class="jspsych-btn" style="display:none">%choice%</button>',
   choices: ['Click here to continue'],
-  on_start: function() {setTimeout(function() {setDisplay("jspsych-btn","")}, 70)},
+  on_start: function() {setTimeout(function() {setDisplay("jspsych-btn","")}, 7000)},
   is_html: true,
   stimulus: "<p align='center'><table width=700 height=100% border=0><tr><td align=center valign=center>" +
     "<img src = 'img/" + colourOrder[0] + "jar.png'></img></td><td align=center valign=center><img src = 'img/" + colourOrder[1] + "jar.png'></img></td></tr></table>" +
@@ -288,7 +283,7 @@ var introPrac = {        // instructions for the practice draws
   type: 'html-button-response',
   button_html: '<button class="jspsych-btn" style="display:none">%choice%</button>',
   choices: ['Click here to begin the practice trials'],
-  on_start: function() {setTimeout(function() {setDisplay("jspsych-btn","")}, 70)},
+  on_start: function() {setTimeout(function() {setDisplay("jspsych-btn","")}, 7000)},
   stimulus: "To familiarise yourself with the jars, you will run through " + nPracTrials + " practice trials.<br><br>" +
       "In these trials, you will draw " + nPracDraws + " balls from a jar (either the " + colourOrder[0] + " jar or the " + colourOrder[1] + " jar).<br>Once you have seen the colour of " + nPracDraws + " balls, you will make your best guess about which jar was selected.<br><br>"
 };
@@ -326,7 +321,7 @@ for (y = 0; y < nPracTrials; y++) {          // loops through y practice trials
     stimulus: ["Here are the " + nPracDraws + " balls you sampled.<font color=white>P" + [y+1] + "</font>"],
     choices: ['Click here to continue'],
     button_html: '<button class="jspsych-btn" style="display:none">%choice%</button>',
-    on_start: function() {setTimeout(function() {setDisplay("jspsych-btn","")}, 30)},
+    on_start: function() {setTimeout(function() {setDisplay("jspsych-btn","")}, 3000)},
     prompt: ["<table width=450 height=100% border=0><tr>" +
     "<td align=center valign=center><img src = img/" + drawBalls[0] + "ballsmall.png></img></td>" +
     "<td align=center valign=center><img src = img/" + drawBalls[1] + "ballsmall.png></img></td>" +
@@ -372,7 +367,7 @@ for (y = 0; y < nPracTrials; y++) {          // loops through y practice trials
       "In that practice trial, you sampled from the <font color=" + pracJars[y] + ">" + pracJars[y] + "</font> jar.<br><br>"],
     choices: pracBut,
     button_html: '<button class="jspsych-btn" style="display:none">%choice%</button>',
-    on_start: function() {setTimeout(function() {setDisplay("jspsych-btn","")}, 30)}
+    on_start: function() {setTimeout(function() {setDisplay("jspsych-btn","")}, 3000)}
   };
   practiceline.push(actualJar);
 };  // end for loop
@@ -392,7 +387,7 @@ var friendsHelp = {
     "Based on the ball they saw, each of my friends will make their best guess about which jar I selected.<br><br>"],
   choices: ['Click here to continue'],
   button_html: '<button class="jspsych-btn" style="display:none">%choice%</button>',
-  on_start: function() {setTimeout(function() {setDisplay("jspsych-btn","")}, 80)}
+  on_start: function() {setTimeout(function() {setDisplay("jspsych-btn","")}, 8000)}
 };
 introloop2.push(friendsHelp);
 
@@ -457,7 +452,7 @@ var twoTypes = {                 // explain we are interested in what they think
   "2. " + social2],  // explanation of second dependency condition
   choices: ['Click here to see the examples'],
   button_html: '<button class="jspsych-btn" style="display:none">%choice%</button>',
-  on_start: function() {setTimeout(function() {setDisplay("jspsych-btn","")}, 120)}
+  on_start: function() {setTimeout(function() {setDisplay("jspsych-btn","")}, 12000)}
 };
 timeline.push(twoTypes);
 
@@ -474,7 +469,7 @@ var gwJars = {    // show grey and white jars, explain ball proportions are the 
     "(that is, there is a small chance of drawing a white ball from the gray jar, or a gray ball from the white jar).<br><br>"],
   choices: ['Click here to continue'],
   button_html: '<button class="jspsych-btn" style="display:none">%choice%</button>',
-  on_start: function() {setTimeout(function() {setDisplay("jspsych-btn","")}, 80)}
+  on_start: function() {setTimeout(function() {setDisplay("jspsych-btn","")}, 8000)}
 };
 timeline.push(gwJars);
 
@@ -627,7 +622,7 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
     type: 'html-button-response',
     button_html: '<button class="jspsych-btn" style="display:none">%choice%</button>',
     choices: ['Click the button to hear ' + names[0] + '\'s guess'],
-    on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 10)},
+    on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 1000)},
     is_html: true,
     stimulus: egA + showPicsA + "<br><br>"
   };
@@ -637,7 +632,7 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
     type: 'html-button-response',
     button_html: '<button class="jspsych-btn" style="display:none">%choice%</button>',
     choices: ['Click the button to hear ' + names[1] + '\'s guess.'],
-    on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 50)},
+    on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 5000)},
     is_html: true,
     stimulus: egA + egFriend1
   };
@@ -664,7 +659,7 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
     type: 'html-button-response',
     button_html: '<button class="jspsych-btn" style="display:none">%choice%</button>',
     choices: ['Click the button to hear ' + names[2] + '\'s guess.'],
-    on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 50)},
+    on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 5000)},
     is_html: true,
     stimulus: egA + egFriend2
   };
@@ -691,7 +686,7 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
     type: 'html-button-response',
     button_html: '<button class="jspsych-btn" style="display:none">%choice%</button>',
     choices: ['Click the button to hear ' + names[3] + '\'s guess.'],
-    on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 60)},
+    on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 6000)},
     is_html: true,
     stimulus: egA + egFriend3
   };
@@ -718,7 +713,7 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
     type: 'html-button-response',
     button_html: '<button class="jspsych-btn" style="display:none">%choice%</button>',
     choices: ['Click the button to hear ' + names[4] + '\'s guess'],
-    on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 60)},
+    on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 6000)},
     is_html: true,
     stimulus: egA + egFriend4
   };
@@ -745,7 +740,7 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
     type: 'html-button-response',
     button_html: '<button class="jspsych-btn" style="display:none">%choice%</button>',
     choices: ['Click here to continue'],
-    on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 60)},
+    on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 6000)},
     is_html: true,
     stimulus: egA + egFriend5
   };
@@ -773,7 +768,7 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
     type: 'html-button-response',
     button_html: '<button class="jspsych-btn" style="display:none">%choice%</button>',
     choices: ['Click the button to hear ' + names[0] + '\'s guess'],
-    on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 10)},
+    on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 1000)},
     is_html: true,
     stimulus: egA + egFriend5 + egB + showPicsB + "<br><br>"
   };
@@ -783,7 +778,7 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
     type: 'html-button-response',
     button_html: '<button class="jspsych-btn" style="display:none">%choice%</button>',
     choices: ['Click the button to hear ' + names[1] + '\'s guess.'],
-    on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 50)},
+    on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 5000)},
     is_html: true,
     stimulus: egA + egFriend5 + egB + egFriendB1
   };
@@ -793,7 +788,7 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
     type: 'html-button-response',
     button_html: '<button class="jspsych-btn" style="display:none">%choice%</button>',
     choices: ['Click the button to hear ' + names[2] + '\'s guess.'],
-    on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 50)},
+    on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 5000)},
     is_html: true,
     stimulus: egA + egFriend5 + egB + egFriendB2
   };
@@ -803,7 +798,7 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
     type: 'html-button-response',
     button_html: '<button class="jspsych-btn" style="display:none">%choice%</button>',
     choices: ['Click the button to hear ' + names[3] + '\'s guess.'],
-    on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 60)},
+    on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 6000)},
     is_html: true,
     stimulus: egA + egFriend5 + egB + egFriendB3
   };
@@ -813,7 +808,7 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
     type: 'html-button-response',
     button_html: '<button class="jspsych-btn" style="display:none">%choice%</button>',
     choices: ['Click the button to hear ' + names[4] + '\'s guess'],
-    on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 60)},
+    on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 6000)},
     is_html: true,
     stimulus: egA + egFriend5 + egB + egFriendB4
   };
@@ -823,7 +818,7 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
     type: 'html-button-response',
     button_html: '<button class="jspsych-btn" style="display:none">%choice%</button>',
     choices: ['Click here to continue'],
-    on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 60)},
+    on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 6000)},
     is_html: true,
     stimulus: egA + egFriend5 + egB + egFriendB5
   };
@@ -834,9 +829,9 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
     type: 'html-button-response',
     button_html: '<button class="jspsych-btn" style="display:none">%choice%</button>',
     choices: ['Click to continue'],
-    on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 60)},
+    on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 6000)},
     is_html: true,
-    stimulus: egA + egFriend5 + egB + egFriendB5  +  // shows all informants + all testimonies
+    stimulus: egA + egFriend5 + egB + egFriendB5 +  // shows all informants + all testimonies
       "You can see that in both cases, all " + informants + " friends guessed the gray jar was selected.<br><br>" +
       "But how they came to make that guess is different...<br>" +
       "Let's take a look at the ball each friend received.<br><br>"
@@ -848,7 +843,7 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
   // explanations for the relationship between friends' own-balls and their testimonies
   var explainI = ["Here you can see that each friend made a guess according to the gray ball they received.<br><br>" +
     "Since the friends are independent of each other, the only evidence they have comes from their own ball.<br><br>"];
-  var explainSq = ["Here you can see that the last two friends have copied the guesses given by earlier friends.<br><br>" +
+  var explainSq = ["Here you can see that the last two friends have copied the guesses given by earlier friends.<br>" +
     names[3] + " and " + names[4] + " guessed 'gray' even though they each received a white ball.<br><br>" +
     "Why did this happen?<br><br>" +
     "Let's think about " + names[4] + "'s situation.<br>" +
@@ -942,7 +937,7 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
       type: 'html-button-response',
       button_html: '<button class="jspsych-btn" style="display:none">%choice%</button>',
       choices: showBallsButton,
-      on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 60)},
+      on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 1000)},
       is_html: true,
       stimulus: combinedStim
     };
@@ -952,7 +947,7 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
   // ------------- choice question ------------------- //
   var twoChoose = {
     type: "survey-multi-choice",
-    preamble: [whichStim], // show independent and sequential examples + own-balls above the which question
+    preamble: [egA + egFriend5 + egB + egFriendB5], // show independent and sequential examples (UNKNOWN BALLS) above the which question
     questions: [{prompt: "In your opinion, which set of social information provided stronger evidence for the gray jar being the selected jar?",
                 options: ["" + dependency[0] + " information", "Both provide equal evidence", "" + dependency[1] + " information"],
                 required: true}],
@@ -960,12 +955,12 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
   if (example == true) {timeline.push(twoChoose);}; // only ask in example runs
 
   var twoWhy = {
-    type: "survey-text",
+    type: "survey-text-required",
     preamble: [""],        // no examples shown above this question (consistent w previous experiments)
     questions: [{prompt: "Why did you choose that answer?", rows: 3, columns: 40,
                   required: true,
                   placeholder: "",
-                  name: "why"}]
+                  name: 'why'}]
   };
   if (example == true) {timeline.push(twoWhy);};   // only ask in example runs
 
@@ -974,7 +969,7 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
     type: 'html-button-response',
     choices: ['Click here to see your ball'],
     button_html: '<button class="jspsych-btn" style="display:none">%choice%</button>',
-    on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 50)},
+    on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 5000)},
     is_html: true,
     stimulus: ["I have replaced all the balls back into the jar.<br><br>I will now randomly take one ball from the selected jar, and show you this ball.<br><br>"]
   };
@@ -984,7 +979,7 @@ function showGuesses(colourX,  // the colour implicated by friends' guesses
     type: 'html-button-response',
     choices: ['Click here to continue'],
     button_html: '<button class="jspsych-btn" style="display:none">%choice%</button>',
-    on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 50)},
+    on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 5000)},
     is_html: true,
     stimulus: "<p align='center'>Here is your ball.</p><img src = 'img/" + colourY + "ball.PNG'></img><br><br>"
   };
@@ -1022,7 +1017,7 @@ var introTask = {      // instructions shown after example run
     "After hearing all the guesses, you will see one randomly-sampled ball from the selected jar.<br><br>"],
   choices: ['Click here to begin'],
   button_html: '<button class="jspsych-btn" style="display:none">%choice%</button>',
-  on_start: function() {setTimeout(function() {setDisplay("jspsych-btn","")}, 80)}
+  on_start: function() {setTimeout(function() {setDisplay("jspsych-btn","")}, 8000)}
 };
 timeline.push(introTask);
 
@@ -1034,7 +1029,7 @@ var realTrial = {
     "I will begin the experiment now by randomly selecting one of these two jars.<br><br>"],
   choices: ['Click here to begin'],
   button_html: '<button class="jspsych-btn" style="display:none">%choice%</button>',
-  on_start: function() {setTimeout(function() {setDisplay("jspsych-btn","")}, 40)}
+  on_start: function() {setTimeout(function() {setDisplay("jspsych-btn","")}, 4000)}
 };
 timeline.push(realTrial);
 
@@ -1046,7 +1041,7 @@ var introSecond = {     // introduce 2 different-coloured jars
   type: 'html-button-response',
   button_html: '<button class="jspsych-btn" style="display:none">%choice%</button>',
   choices: ['Click here to continue'],
-  on_start: function() {setTimeout(function() {setDisplay("jspsych-btn","")}, 70)},
+  on_start: function() {setTimeout(function() {setDisplay("jspsych-btn","")}, 7000)},
   is_html: true,
   stimulus: "<p align='center'><table width=700 height=100% border=0><tr><td align=center valign=center>" +
     "<img src = 'img/" + colourOrder[2] + "jar.png'></img></td><td align=center valign=center><img src = 'img/" + colourOrder[3] + "jar.png'></img></td></tr></table>" +
@@ -1060,7 +1055,7 @@ var introSecond2 = {    // repeat how the task works
   type: 'html-button-response',
   button_html: '<button class="jspsych-btn" style="display:none">%choice%</button>',
   choices: ['Click here to continue'],
-  on_start: function() {setTimeout(function() {setDisplay("jspsych-btn","")}, 50)},
+  on_start: function() {setTimeout(function() {setDisplay("jspsych-btn","")}, 5000)},
   is_html: true,
   stimulus: "<p align='center'><table width=700 height=100% border=0><tr><td align=center valign=center>" +
     "<img src = 'img/" + colourOrder[2] + "jar.png'></img></td><td align=center valign=center><img src = 'img/" + colourOrder[3] + "jar.png'></img></td></tr></table>" +
@@ -1080,7 +1075,7 @@ var introSecond3 = {      // explain that the 2nd dependency condition differs f
   type: 'html-button-response',
   button_html: '<button class="jspsych-btn" style="display:none">%choice%</button>',
   choices: ['Click here to continue'],
-  on_start: function() {setTimeout(function() {setDisplay("jspsych-btn","")}, 100)},
+  on_start: function() {setTimeout(function() {setDisplay("jspsych-btn","")}, 10000)},
   is_html: true,
   stimulus: "Again, my friends will help you by sharing their best guesses as to which jar was selected.<br><br>" +
     "However, their guesses will be given slightly differently this time.<br><br>" + // perhaps end the instructions here??
@@ -1092,7 +1087,7 @@ var introSecond4 = {     // reiterate what the friends will do
   type: 'html-button-response',
   button_html: '<button class="jspsych-btn" style="display:none">%choice%</button>',
   choices: ['Click here to continue'],
-  on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 90)},
+  on_start: function() {setTimeout(function(){setDisplay("jspsych-btn","")}, 9000)},
   is_html: true,
   stimulus: "<p align='center'><table width=700 height=100% border=0><tr><td align=center valign=center>" +
     "<img src = 'img/" + colourOrder[2] + "jar.png'></img></td><td align=center valign=center><img src = 'img/" + colourOrder[3] + "jar.png'></img></td></tr></table>" +
@@ -1107,10 +1102,10 @@ var trial2 = showGuesses(colourOrder[3], colourOrder[2], "", "", false, dependen
 
 // ---------------------- ATTENTION CHECK --------------------------- //
 var attnCheck = {
-  type: 'survey-text',
+  type: 'survey-text-required',
   questions: [{prompt: "",
                 placeholder: "",
-                name: "attn"}],
+                name: 'attn'}],
   preamble: ["<div class = 'center-content'><img src = 'img/attnCheck.png' width = '350'></img>"]
 };
 timeline.push(attnCheck);

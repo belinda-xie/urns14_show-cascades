@@ -4,8 +4,8 @@ var welcome = {};
 
 welcome.task = {};
 welcome.task.blurb = '<b>"The jar guessing game"</b> is a short psychological study investigating how people make decisions.';
-welcome.task.time = '5 minutes';
-welcome.task.pay = 'USD $0.90';
+welcome.task.time = '10 minutes';
+welcome.task.pay = 'USD $2.00';
 
 // --------------  things that vary between ethics approvals --------------
 
